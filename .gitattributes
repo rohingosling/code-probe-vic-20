@@ -1,0 +1,11 @@
+# Controls `git archive` output -- i.e. GitHub's auto-generated Source Code
+# (zip) / (tar.gz) on each release. Paths marked `export-ignore` are stripped
+# from those archives. Authoritative manifest is in CLAUDE.md
+# ("Release Source Archives"); this file mirrors its Excluded list.
+
+/.gitattributes      export-ignore
+/.markdownlint.json  export-ignore
+/.vscode/            export-ignore
+/dist/               export-ignore
+/images/             export-ignore
+/roms/               export-ignore
