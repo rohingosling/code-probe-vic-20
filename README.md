@@ -154,7 +154,7 @@ The expected file is a 4098-byte PRG with a `$A000` load-address header (4096 by
 
 ## Tape Listing
 
-Contents of the `code-probe-1.1.tap` tape image.
+Contents of the `code-probe.tap` tape image.
 
 | File        | Type | Description                                                |
 |-------------|------|------------------------------------------------------------|
