@@ -11,7 +11,7 @@
 |:---:|:---:|
 |![](images/capture/Assemble/assemble.gif)|![](images/capture/Save%20and%20Load/load-and-save.gif)|
 
-A lightweight machine language monitor for the Commodore VIC-20, written in 6502 assembly.
+A machine language monitor for the Commodore VIC-20 and VIC-1211A Super Expander.
 
 - Inspect and modify memory with a hex dump and interactive alter mode.
 - View the CPU registers and processor status flags captured at the end of the last executed routine.
