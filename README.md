@@ -6,6 +6,7 @@
 ![Kick Assembler](https://img.shields.io/badge/Kick_Assembler-2E7D32?style=flat&logoColor=white)
 ![Commodore VIC-20](https://img.shields.io/badge/Commodore_VIC--20-5A6BC8?style=flat&logo=commodore&logoColor=white)
 ![Super Expander](https://img.shields.io/badge/VIC--1211A_Super_Expander-7A4FA8?style=flat&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)
 
 |||
 |:---:|:---:|
@@ -163,5 +164,11 @@ Contents of the `code-probe.tap` tape image.
 The `dist/examples/` directory contains additional tape images used as round-trip test fixtures and tutorial subjects: `cube.tap` (a 3D rotating wireframe cube targeting the unexpanded VIC-20), and `hello.tap` / `hello2.tap` (minimal "hello world" greeters demonstrated in the user manual's tutorial chapter).
 
 ## License
+
+Copyright © 2026 Rohin Gosling.
+
+The Code Probe software is distributed under the [MIT License](LICENSE) — a permissive, free-software licence that allows use, modification, and redistribution (including commercial use), provided the copyright notice and licence text are preserved.
+
+The user manual (`docs/user-manual.md` and `docs/user-manual.pdf`) is distributed separately under the [Creative Commons Attribution-ShareAlike 4.0 International License](docs/LICENSE) (CC BY-SA 4.0). You are free to share and adapt the document for any purpose, including commercial use, provided that you give appropriate credit to Rohin Gosling, indicate if changes were made, and distribute any derivative works under the same licence.
 
 This is a personal retrocomputing project shared for historical and educational purposes.
