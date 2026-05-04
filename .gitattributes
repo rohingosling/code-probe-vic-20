@@ -7,5 +7,6 @@
 /.markdownlint.json  export-ignore
 /.vscode/            export-ignore
 /dist/               export-ignore
+/docs/claude/        export-ignore
 /images/             export-ignore
 /roms/               export-ignore
