@@ -1,4 +1,4 @@
-# Code Probe
+# Code Probe (VIC-20)
 
 ![Assembly](https://img.shields.io/badge/Assembly-654FF0?style=flat&logoColor=white)
 ![Machine Language](https://img.shields.io/badge/Machine_Language-E44D26?style=flat&logoColor=white)
@@ -163,12 +163,19 @@ Contents of the `code-probe.tap` tape image.
 
 The `dist/examples/` directory contains additional tape images used as round-trip test fixtures and tutorial subjects: `cube.tap` (a 3D rotating wireframe cube targeting the unexpanded VIC-20), and `hello.tap` / `hello2.tap` (minimal "hello world" greeters demonstrated in the user manual's tutorial chapter).
 
+## Acknowledgements
+
+| Tool                                                       | Author&nbsp;/&nbsp;Maintainer | Role in this project                                                                                          |
+|------------------------------------------------------------|-------------------------------|---------------------------------------------------------------------------------------------------------------|
+| [Kick&nbsp;Assembler](http://www.theweb.dk/KickAssembler/) | Mads&nbsp;Nielsen             | 6502 cross-assembler. Builds `codeprobe.prg` from `code-probe-vic-20.asm`.                                            |
+| [VICE](https://vice-emu.sourceforge.io/)                   | The&nbsp;VICE&nbsp;Team       | Commodore emulator suite. `xvic` and `x64sc` for development and testing.                                     |
+| [C64&nbsp;TrueType](https://style64.org/c64-truetype)      | STYLE                         | TrueType C64 font set. Used to typeset the user manual in an authentic Commodore style.                       |
+| Claude&nbsp;Code                                           | Anthropic                     | AI coding assistant. Constructed the Kick Assembler listings from the original PRG binaries.                  |
+
 ## License
 
 Copyright © 2026 Rohin Gosling.
 
-The Code Probe software is distributed under the [MIT License](LICENSE) — a permissive, free-software licence that allows use, modification, and redistribution (including commercial use), provided the copyright notice and licence text are preserved.
-
-The user manual (`docs/user-manual.md` and `docs/user-manual.pdf`) is distributed separately under the [Creative Commons Attribution-ShareAlike 4.0 International License](docs/LICENSE) (CC BY-SA 4.0). You are free to share and adapt the document for any purpose, including commercial use, provided that you give appropriate credit to Rohin Gosling, indicate if changes were made, and distribute any derivative works under the same licence.
+Code Probe and its accompanying user manual are distributed under the [MIT License](LICENSE) — a permissive, free-software licence that allows use, modification, and redistribution (including commercial use), provided the copyright notice and licence text are preserved.
 
 This is a personal retrocomputing project shared for historical and educational purposes.
