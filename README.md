@@ -19,6 +19,10 @@ A machine language monitor for the Commodore VIC-20 and VIC-1211A Super Expander
 - Save and load machine language programs to and from tape, in PRG and SEQ formats.
 - Loads at `$0480` inside the VIC-1211A Super Expander's 3 KiB expansion RAM and is invoked from BASIC with `SYS 1152`.
 
+<br>
+
+> *See Commodore 64 version, [here](https://github.com/rohingosling/code-probe-c64).*
+
 ## Overview
 
 Code Probe is a software-based machine language monitor that runs in the 3 KiB expansion RAM of the **VIC-1211A Super Expander** cartridge and produces machine language programs that run on a stock unexpanded VIC-20 with no cartridge. The Super Expander must be inserted at boot; without it, there is no RAM at `$0480` for Code Probe to live in.
