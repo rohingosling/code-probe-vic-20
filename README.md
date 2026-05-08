@@ -1,18 +1,18 @@
 # Code Probe (VIC-20)
 
-![Assembly](https://img.shields.io/badge/Assembly-654FF0?style=flat&logoColor=white)
-![Machine Language](https://img.shields.io/badge/Machine_Language-E44D26?style=flat&logoColor=white)
-![6502](https://img.shields.io/badge/6502-00979D?style=flat&logoColor=white)
-![Kick Assembler](https://img.shields.io/badge/Kick_Assembler-2E7D32?style=flat&logoColor=white)
-![Commodore VIC-20](https://img.shields.io/badge/Commodore_VIC--20-5A6BC8?style=flat&logo=commodore&logoColor=white)
-![Super Expander](https://img.shields.io/badge/VIC--1211A_Super_Expander-7A4FA8?style=flat&logoColor=white)
+![Assembly](https://img.shields.io/badge/Assembly-40318D?style=flat&logoColor=white)
+![Machine Language](https://img.shields.io/badge/Machine_Language-AA7449?style=flat&logoColor=white)
+![6502](https://img.shields.io/badge/6502-782922?style=flat&logoColor=white)
+![Kick Assembler](https://img.shields.io/badge/Kick_Assembler-55A049?style=flat&logoColor=white)
+![Commodore VIC-20](https://img.shields.io/badge/Commodore_VIC--20-1428A0?style=flat&logo=commodore&logoColor=white)
+![Super Expander](https://img.shields.io/badge/VIC--1211A_Super_Expander-AA5FB6?style=flat&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)
 
 |||
 |:---:|:---:|
 |![](images/capture/Assemble/assemble.gif)|![](images/capture/Save%20and%20Load/load-and-save.gif)|
 
-A machine language monitor for the Commodore VIC-20 and VIC-1211A Super Expander.
+A machine language monitor for the **Commodore VIC-20** and **VIC-1211A Super Expander**.
 
 - Inspect and modify memory with a hex dump and interactive alter mode.
 - View the CPU registers and processor status flags captured at the end of the last executed routine.
@@ -21,13 +21,57 @@ A machine language monitor for the Commodore VIC-20 and VIC-1211A Super Expander
 
 <br>
 
-> *See Commodore 64 version, [here](https://github.com/rohingosling/code-probe-c64).*
+> ***See also:** [Code Probe (C64)](https://github.com/rohingosling/code-probe-c64) — For the Commodore 64 verison of Code Probe.*
 
-## Overview
+## 🚀 Quick Start
 
-Code Probe is a software-based machine language monitor that runs in the 3 KiB expansion RAM of the **VIC-1211A Super Expander** cartridge and produces machine language programs that run on a stock unexpanded VIC-20 with no cartridge. The Super Expander must be inserted at boot; without it, there is no RAM at `$0480` for Code Probe to live in.
+Want to just run **Code Probe**? Download what you need from the v1.1 release:
+
+| File                                  | Download                                                                                                               | Use case                                          |
+|---------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------|
+| `code-probe.prg`                      | [download](https://github.com/rohingosling/code-probe-vic-20/releases/download/v1.1/code-probe.prg)                    | Run on the VICE emulator                          |
+| `code-probe.tap`                      | [download](https://github.com/rohingosling/code-probe-vic-20/releases/download/v1.1/code-probe.tap)                    | Load on a real **VIC-20** via Datasette / SD2IEC  |
+| `code-probe-user-manual-vic-20.pdf`   | [download](https://github.com/rohingosling/code-probe-vic-20/releases/download/v1.1/code-probe-user-manual-vic-20.pdf) | Read the manual                                   |
+
+You'll also need either a physical **VIC-1211A Super Expander** cartridge if you're using a physical VIC-20, or a **VIC-1211A Super Expander** ROM if you're using an emulator. In the case of a ROM for emulation, See [Super Expander ROM](#super-expander-rom) for the download link and setup.
+
+**Run on VICE:**
+
+```bash
+xvic -memory 3k -cartA super-expander-a000.prg -autostart code-probe.prg
+```
+
+**Run on real hardware** (Super Expander cartridge inserted, `code-probe.tap` on Datasette or SD2IEC):
+
+```
+LOAD "CODEPROBE",1,1
+RUN
+```
+
+<br>
+
+## 📑 Contents
+
+- [🚀 Quick Start](#-quick-start)
+- [🔎 Overview](#-overview)
+- [🕒 History](#-history)
+- [💾 Loading and Starting](#-loading-and-starting)
+- [📝 Command Reference](#-command-reference)
+- [⚖️ Compared to Other VIC-20 Monitors](#-compared-to-other-vic-20-monitors)
+- [💻 Building From Source](#-building-from-source)
+- [👪 Code Probe Family](#-code-probe-family)
+- [🙋‍♂️ Acknowledgements](#-acknowledgements)
+- [📄 License](#-license)
+
+<br>
+
+## 🔎 Overview 
+
+Code Probe is a software-based machine language monitor that runs in the 3 KiB expansion RAM of the **VIC-1211A Super Expander** cartridge and produces machine language programs that run on a stock unexpanded **VIC-20** with no cartridge. The Super Expander must be inserted at boot; without it, there is no RAM at `$0480` for Code Probe to live in.
 
 The design of Code Probe was inspired by the DOS `DEBUG` utility, and presents a similar terminal-style user interface and commands. All numeric input is hexadecimal. Addresses are 4 digits, byte values are 2 digits, file types are 2 digits.
+
+<br>
 
 ### Features
 
@@ -39,7 +83,23 @@ The design of Code Probe was inspired by the DOS `DEBUG` utility, and presents a
 - **Screen control** - Clear the display with a single command.
 - **Exit to BASIC** - Return to BASIC's `READY.` prompt; re-enter Code Probe with `SYS 1152`.
 
-## Loading and Starting
+<br>
+
+## 🕒 History
+
+I originally wrote **Code Probe** in 1988 on a **Commodore VIC-20** with the **VIC-1211A Super Expander** cartridge. As a teenager I always wanted a cartridge with a monitor. I did end up getting a cartridge, the **Super Expander**, but it never came with a monitor. It *did*, however, have 3K of extra RAM, which at the time got me thinking, how hard could it be to make my own machine language monitor?
+
+It turns out monitors aren't super complicated, especially a minimal one like **Code Probe**. You're basically just building a simple CLI that lets a user poke values into RAM, except using load and store (`LDA`, `STA`) instead of `POKE`. The monitor itself can be poked in via a **BASIC** machine language loader, which is how I built the very first version of Code Probe, using [HEX-Loader](https://github.com/rohingosling/c64-hex-loader/tree/main).
+
+I no longer have the original physical VIC-20 today, but I did end up getting a Commodore 64 in the early 1990s, which I used to copy Code Probe's PRG from tape to disk so I could use it to make a C64 version of Code Probe. From there, both the VIC-20 and C64 versions eventually made their way onto SD card in the early 2000s via SD2IEC. And then from SD card onto PC hard drive, where they remained dormant for many decades. ...Until now!
+
+In 2026, just to see if it could be done, I fished out the PRG binaries and tried using [Claude Code](https://www.anthropic.com/claude-code) to disassemble them and generate modern [Kick Assembler](http://www.theweb.dk/KickAssembler/) source listings for both. I'm pleased to report, it worked! Really well, in fact. I was able to use Claude Code together with Kick Assembler to fix a handful of long-standing bugs and make one or two small improvements.
+
+Although the rebuilt versions aren't byte-for-byte identical to the originals, for the sake of nostalgia I kept the original attribution lines exactly as they appeared on the 1988 and 1990 builds: `ROHIN GOSLING (1988)` for the VIC-20 version, and `ROHIN GOSLING (1990)` for the C64 version. But they both do have a fresh coat of 2026 paint, courtesy of [Claude Code](https://www.anthropic.com/claude-code) and [Kick Assembler](http://www.theweb.dk/KickAssembler/).
+
+<br>
+
+## 💾 Loading and Starting
 
 Code Probe loads at address `$0480` (1152 decimal) and occupies 2614 bytes of RAM in the `$0480`-`$0EB5` region of the Super Expander's expansion RAM. The full PRG file is 2743 bytes: a 13-byte BASIC stub at `$0401-$040D`, a zero-fill gap, the monitor body at `$0480-$0EB5`, plus the standard 2-byte PRG header. The native VIC-20 RAM at `$1001-$1DFF` is left free for user machine language programs.
 
@@ -66,7 +126,7 @@ To boot a bare Super-Expanded VIC-20 without autostart, then attach a tape image
 xvic -memory 3k -cartA roms/super-expander-a000.prg
 ```
 
-Run both commands from the `v1/` directory so the relative paths to `roms/` and `build/` resolve. `xvic` must be on `PATH`, or substitute the full path to your VICE install.
+Run both commands from the repository root so the relative paths to `roms/` and `build/` resolve. `xvic` must be on `PATH`, or substitute the full path to your VICE install.
 
 ### What happens at startup
 
@@ -90,7 +150,9 @@ Run both commands from the `v1/` directory so the relative paths to `roms/` and 
    : █
    ```
 
-## Command Reference
+<br>
+
+## 📝 Command Reference
 
 All address and count values are hexadecimal. Addresses are 4 digits, byte values are 2 digits, file types are 2 digits. Command dispatch is single-character: `C`, `CLS`, and `CLEAR` all route to the clear-screen command; `E`, `EXIT`, and `END` all route to the exit-to-BASIC command.
 
@@ -108,9 +170,25 @@ All address and count values are hexadecimal. Addresses are 4 digits, byte value
 
 The `S` command splits across two lines: the first line names the address range and the file type, and the second line is an auto-prompted `FILE:` entry for the filename (up to 16 characters, unquoted). Splitting the filename off the command line means long names do not have to fit alongside three other tokens on the 22-column screen.
 
-See [`docs/user-manual.pdf`](docs/user-manual.pdf) for the full user manual, including worked tutorials, the memory map, error messages, a quick reference card, and an appendix on attaching the Super Expander cartridge under VICE.
+See [`docs/code-probe-user-manual-vic-20.pdf`](docs/code-probe-user-manual-vic-20.pdf) for the full user manual, including worked tutorials, the memory map, error messages, a quick reference card, and an appendix on attaching the Super Expander cartridge under VICE.
 
-## Building From Source
+<br>
+
+## ⚖️ Compared to Other VIC-20 Monitors
+
+The **VIC-20** has had several machine language monitors over the years, from full-featured commercial cartridges to minimal type-in listings published in magazines. **Code Probe** sits at the smaller, more focused end of that spectrum. Originally a type-in-style program that runs inside the **Super Expander's** existing 3 KiB RAM rather than requiring its own cartridge. Now converted into a modern open source assembly listing for [**Kick Assembler**](http://www.theweb.dk/KickAssembler/).
+
+| Monitor | Year | Form & Size | Notable Features |
+|---------|------|-------------|------------------|
+| **Code Probe** <br>*(this project)* | 1988 | Tape PRG, ~2 KB at `$0480` (in Super Expander RAM) | Hex dump, alter mode, registers, JSR run, PRG and SEQ tape I/O. <br>MIT-licensed modern 2026 assembly rebuild from the original 1988 binaries. |
+| VICMON <br>(VIC-1213) | 1982 | Cartridge, 4 KB ROM at `$6000` | Commodore's first-party monitor. Assembler, disassembler, breakpoints, single-step. The full-featured option. |
+| HESMON <br>(HES C302) | 1982 | Cartridge, 4 KB ROM | Commercial cartridge from HES (Terry Peterson). Assembler and disassembler. |
+| Super VICMON | early 1980s | Type-in PRG, ~3 KB | Jim Butterfield's SuperMon ported to VIC-20 by David A. Hook. Hunt, transfer, mini-assembler, disassembler. |
+| TINYMON1 | 1982 | Type-in PRG, ~760 bytes | Jim Butterfield (COMPUTE! issue 20). `M`, `R`, `G`, `S`, `L`, `X` — the closest scope analogue to Code Probe in this list. |
+
+<br>
+
+## 💻 Building From Source
 
 Code Probe is a single-file assembly project built with [Kick Assembler](http://www.theweb.dk/KickAssembler/). Java is required.
 
@@ -145,7 +223,7 @@ The `,1,1` parameter forces the file to load at the address in its PRG header (`
 xvic -memory 3k -cartA roms/super-expander-a000.prg -autostart build/code-probe.prg
 ```
 
-Run from the `v1/` directory so the relative paths resolve. `xvic` must be on `PATH`, or substitute the full path to your VICE install (e.g. `C:\Programs\GTK3VICE-3.10-win64\bin\xvic.exe` on Windows, `/usr/bin/xvic` on most Linux distributions).
+Run from the repository root so the relative paths resolve. `xvic` must be on `PATH`, or substitute the full path to your VICE install (e.g. `C:\Programs\GTK3VICE-3.10-win64\bin\xvic.exe` on Windows, `/usr/bin/xvic` on most Linux distributions).
 
 #### Super Expander ROM
 
@@ -157,26 +235,37 @@ The expected file is a 4098-byte PRG with a `$A000` load-address header (4096 by
 
 > **Note:**<br>Two versions of the VIC-1211 Super Expander are available on zimmers.net. The `VIC1211m`, originally targeting the Japanese market in the 1980s, and the standard VIC-1211A, listed as `Super Expander.prg` on the download page. For Code Probe, download the standard VIC-1211A (`Super Expander.prg`) and rename it to `super-expander-a000.prg` so the `xvic -cartA` argument resolves. The `-a000` filename suffix is a VICE smart-attach hint.
 
-## Tape Listing
+### Tape Images
 
-Contents of the `code-probe.tap` tape image.
+`code-probe.tap` is the project's primary tape image — a Datasette-format archive containing the compiled `CODEPROBE` PRG (the v1.1 monitor binary).
 
-| File        | Type | Description                                                |
-|-------------|------|------------------------------------------------------------|
-| `CODEPROBE` | PRG  | Compiled Code Probe machine language monitor (v1.1).       |
+Additional tape images live in `dist/examples/`: `cube.tap` (a 3D rotating wireframe cube targeting the unexpanded VIC-20), and `hello.tap` / `hello2.tap` (minimal "hello world" greeters demonstrated in the user manual's tutorial chapter). These are round-trip test fixtures and tutorial subjects, not part of Code Probe itself.
 
-The `dist/examples/` directory contains additional tape images used as round-trip test fixtures and tutorial subjects: `cube.tap` (a 3D rotating wireframe cube targeting the unexpanded VIC-20), and `hello.tap` / `hello2.tap` (minimal "hello world" greeters demonstrated in the user manual's tutorial chapter).
+<br>
 
-## Acknowledgements
+## 👪 Code Probe Family
+
+There are two main versions of **Code Probe**. The original 1988 **VIC-20** version, and then the 1990 port to **C64**. Both were rebuilt in 2026 from their original PRG binaries using [Kick Assembler](http://www.theweb.dk/KickAssembler/) and [Claude Code](https://www.anthropic.com/claude-code).
+
+| Machine  | Repository | Original | Status |
+|----------|------------|----------|--------|
+| Commodore VIC-20 | [code-probe-vic-20](https://github.com/rohingosling/code-probe-vic-20) | 1988 | v1.1 — This repo |
+| Commodore 64 | [code-probe-c64](https://github.com/rohingosling/code-probe-c64) | 1990 | v1.1 — Commodore 64 version remo |
+
+<br>
+
+## 🙋‍♂️ Acknowledgements
 
 | Tool                                                       | Author&nbsp;/&nbsp;Maintainer | Role in this project                                                                                          |
 |------------------------------------------------------------|-------------------------------|---------------------------------------------------------------------------------------------------------------|
 | [Kick&nbsp;Assembler](http://www.theweb.dk/KickAssembler/) | Mads&nbsp;Nielsen             | 6502 cross-assembler. Builds `codeprobe.prg` from `code-probe-vic-20.asm`.                                            |
 | [VICE](https://vice-emu.sourceforge.io/)                   | The&nbsp;VICE&nbsp;Team       | Commodore emulator suite. `xvic` and `x64sc` for development and testing.                                     |
 | [C64&nbsp;TrueType](https://style64.org/c64-truetype)      | STYLE                         | TrueType C64 font set. Used to typeset the user manual in an authentic Commodore style.                       |
-| Claude&nbsp;Code                                           | Anthropic                     | AI coding assistant. Constructed the Kick Assembler listings from the original PRG binaries.                  |
+| [Claude Code](https://www.anthropic.com/claude-code)       | Anthropic                     | AI coding assistant. Constructed the Kick Assembler listings from the original PRG binaries.                  |
 
-## License
+<br>
+
+## 📄 License
 
 Copyright © 2026 Rohin Gosling.
 
