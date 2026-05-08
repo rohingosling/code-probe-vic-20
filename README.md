@@ -41,6 +41,8 @@ You'll also need either a physical **VIC-1211A Super Expander** cartridge if you
 xvic -memory 3k -cartA super-expander-a000.prg -autostart code-probe.prg
 ```
 
+The `-memory 3k` flag in the command line enables the 3 KiB Block 0 RAM that Code Probe loads into. If you're configuring VICE through the GUI instead, enable **Block 0 (3 KiB)** in VICE's memory settings before launching — without it there's no RAM at `$0480` for Code Probe to land.
+
 **Run on real hardware** (Super Expander cartridge inserted, `code-probe.tap` on Datasette or SD2IEC):
 
 ```
