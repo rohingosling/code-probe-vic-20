@@ -46,7 +46,7 @@ Want to just run **Code Probe**? Download what you need from the v1.1 release:
 | File                                  | Download                                                                                                               | Use case                                                          |
 |---------------------------------------|------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
 | `code-probe.prg`                      | [download](https://github.com/rohingosling/code-probe-vic-20/releases/download/v1.1/code-probe.prg)                    | Run on VICE, or load on a real **VIC-20** via SD2IEC / 1541       |
-| `code-probe.tap`                      | [download](https://github.com/rohingosling/code-probe-vic-20/releases/download/v1.1/code-probe.tap)                    | Load on a real **VIC-20** via TAPuino, or record onto a cassette  |
+| `code-probe-vic20.tap`                | [download](https://github.com/rohingosling/code-probe-vic-20/releases/download/v1.1/code-probe-vic20.tap)              | Load on a real **VIC-20** via TAPuino, or record onto a cassette  |
 | `code-probe-user-manual-vic-20.pdf`   | [download](https://github.com/rohingosling/code-probe-vic-20/releases/download/v1.1/code-probe-user-manual-vic-20.pdf) | Read the manual                                                   |
 
 You'll also need either a physical **VIC-1211A Super Expander** cartridge if you're using a physical VIC-20, or a **VIC-1211A Super Expander** ROM if you're using an emulator. In the case of a ROM for emulation, see [Super Expander ROM](#super-expander-rom) for the download link and setup.
@@ -63,12 +63,12 @@ The `-memory 3k` flag in the command line enables the 3 KiB Block 0 RAM that Cod
 
 Startup the **VIC-20** with a **VIC-1211A Super Expander** cartridge inserted. The load command depends on the device you're loading from:
 
-| Loading device                                          | File             | Load command             |
-|---------------------------------------------------------|------------------|--------------------------|
-| TAPuino, or `code-probe.tap` recorded onto a cassette   | `code-probe.tap` | `LOAD "CODEPROBE",1,1`   |
-| SD2IEC / Pi1541 / 1541 Ultimate / real 1541 floppy      | `code-probe.prg` | `LOAD "CODE-PROBE",8,1`  |
+| Loading device                                              | File                   | Load command             |
+|-------------------------------------------------------------|------------------------|--------------------------|
+| TAPuino, or `code-probe-vic20.tap` recorded onto a cassette | `code-probe-vic20.tap` | `LOAD "CODEPROBE",1,1`   |
+| SD2IEC / Pi1541 / 1541 Ultimate / real 1541 floppy          | `code-probe.prg`       | `LOAD "CODE-PROBE",8,1`  |
 
-Then type `RUN` to start. See [Loading and Starting](#-loading-and-starting) for how to put `code-probe.tap` onto a real cassette, or `code-probe.prg` onto a real 1541 disk.
+Then type `RUN` to start. See [Loading and Starting](#-loading-and-starting) for how to put `code-probe-vic20.tap` onto a real cassette, or `code-probe.prg` onto a real 1541 disk.
 
 <br>
 
@@ -119,10 +119,10 @@ To launch `xvic` with the Super Expander cartridge attached, the 3 KiB Block 0 R
 xvic -memory 3k -cartA roms/super-expander-a000.prg -autostart build/code-probe.prg
 ```
 
-VICE can autostart `build/code-probe.tap` the same way, in which case it drives the emulated Datasette through the load sequence and runs the program:
+VICE can autostart `build/code-probe-vic20.tap` the same way, in which case it drives the emulated Datasette through the load sequence and runs the program:
 
 ```bash
-xvic -memory 3k -cartA roms/super-expander-a000.prg -autostart build/code-probe.tap
+xvic -memory 3k -cartA roms/super-expander-a000.prg -autostart build/code-probe-vic20.tap
 ```
 
 To boot a bare Super-Expanded VIC-20 and load Code Probe from tape by hand:
@@ -131,7 +131,7 @@ To boot a bare Super-Expanded VIC-20 and load Code Probe from tape by hand:
 xvic -memory 3k -cartA roms/super-expander-a000.prg
 ```
 
-Once VICE is running, attach the tape image via **File → Attach tape image → Attach to Datasette 1...** and select `build/code-probe.tap`. Then at the BASIC prompt:
+Once VICE is running, attach the tape image via **File → Attach tape image → Attach to Datasette 1...** and select `build/code-probe-vic20.tap`. Then at the BASIC prompt:
 
 ```
 LOAD "CODEPROBE",1,1
@@ -166,14 +166,14 @@ Run all commands from the repository root so the relative paths to `roms/` and `
 
 ### **From Real Hardware**
 
-The published v1.1 release ships two prebuilt artefacts: `code-probe.tap` for tape-based loading and `code-probe.prg` for disk-based loading. Pick the path that matches the storage device attached to your VIC-20. All four paths assume the **VIC-1211A Super Expander** cartridge is inserted at boot.
+The published v1.1 release ships two prebuilt artefacts: `code-probe-vic20.tap` for tape-based loading and `code-probe.prg` for disk-based loading. Pick the path that matches the storage device attached to your VIC-20. All four paths assume the **VIC-1211A Super Expander** cartridge is inserted at boot.
 
 #### TAPuino (SD-card tape emulator)
 
 A [TAPuino](https://github.com/sweetlilmre/TAPuino) is an Arduino-based device that plugs into the VIC-20's cassette port and synthesises Datasette pulses from `.tap` files on an SD card. Stock Kernal, no patches required.
 
-1. Copy `code-probe.tap` to the SD card.
-2. Plug the TAPuino into the cassette port and select `code-probe.tap` in its file browser.
+1. Copy `code-probe-vic20.tap` to the SD card.
+2. Plug the TAPuino into the cassette port and select `code-probe-vic20.tap` in its file browser.
 3. On the VIC-20, type `LOAD "CODEPROBE",1,1`, then press the TAPuino's PLAY button when prompted.
 4. After the load completes, type `RUN`.
 
@@ -181,7 +181,7 @@ A [TAPuino](https://github.com/sweetlilmre/TAPuino) is an Arduino-based device t
 
 The literal "physical tape" path. `.tap` is a PC-side container of pulse timings; a stock Datasette only reads cassette audio, so the file must first be rendered to audio and recorded onto a blank cassette.
 
-1. Convert `code-probe.tap` to a `.wav` audio file using [Audiotap](http://wav-prg.sourceforge.net) (formerly WAV-PRG) or `prg2wav`.
+1. Convert `code-probe-vic20.tap` to a `.wav` audio file using [Audiotap](http://wav-prg.sourceforge.net) (formerly WAV-PRG) or `prg2wav`.
 2. Connect your PC's line-out (not headphone) to the line-in of a regular cassette deck. Set a clean, healthy recording level — loud enough to be unambiguous, not so loud the deck clips.
 3. Insert a blank C-60 or C-90 ferric (Type I) cassette and record the `.wav` from the PC.
 4. Rewind the cassette, insert it into the Datasette, and press PLAY.
@@ -302,9 +302,9 @@ The expected file is a 4098-byte PRG with a `$A000` load-address header (4096 by
 
 ### Tape Images
 
-`code-probe.tap` is the project's primary tape image — a Datasette-format archive containing the compiled `CODEPROBE` PRG (the v1.1 monitor binary).
+`code-probe-vic20.tap` is the project's primary tape image — a Datasette-format archive containing the compiled `CODEPROBE` PRG (the v1.1 monitor binary).
 
-Additional tape images live in `dist/examples/`: `cube.tap` (a 3D rotating wireframe cube targeting the unexpanded VIC-20), and `hello.tap` / `hello2.tap` (minimal "hello world" greeters demonstrated in the user manual's tutorial chapter). These are round-trip test fixtures and tutorial subjects, not part of Code Probe itself.
+Additional tape images live in `dist/examples/`: `3d-cube.tap` (a 3D rotating wireframe cube targeting the unexpanded VIC-20), and `hello.tap` / `hello2.tap` (minimal "hello world" greeters demonstrated in the user manual's tutorial chapter). These are round-trip test fixtures and tutorial subjects, not part of Code Probe itself.
 
 <br>
 
