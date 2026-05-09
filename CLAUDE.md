@@ -51,13 +51,41 @@ and apply symmetrically on the sibling `code-probe-c64` repository.
 
 ### Inline formatting
 
-- Hardware names (`**Code Probe**`, `**VIC-20**`,
-  `**VIC-1211A Super Expander**`, `**C64**`, `**BASIC**`) are bolded
-  inline on first prose use within a section.
+- Hardware, peripheral, and product names from the bold-list below are
+  bolded on **every prose occurrence**, including possessive forms
+  (e.g. `**VIC-20's**`, `**Code Probe's**`, `**TAPuino's**`). The rule
+  applies to first mentions, repeat mentions in the same paragraph,
+  mentions inside link text, and mentions inside table cells. Earlier
+  versions of this convention used "first prose use within a section";
+  the rule changed to "every occurrence" on 2026-05-09 — see the
+  edits-log A17 entry for the rationale.
+
+  **Bold-list** (longer phrases take precedence over the shorter forms
+  they contain — bold the whole `**VIC-1211A Super Expander**`, not
+  `**VIC-1211A** **Super Expander**`):
+
+  - **Commodore VIC-20**, **VIC-20**, **VIC20**
+  - **Commodore 64**, **C64**
+  - **VIC-1211A Super Expander**, **VIC-1211 Super Expander**,
+    **Super Expander**, **VIC-1211A**, **VIC-1211**
+  - **VICE**
+  - **BASIC**
+  - **Code Probe**
+  - **TAPuino**, **SD2IEC**, **Pi1541**
+  - **VICMON**, **HESMON**, **Super VICMON**, **TINYMON1**
+
+- Bold applies only to prose. Names appearing inside backticked code
+  spans (filenames, paths, commands, register names), code blocks,
+  section/subsection headings, image alt text, or URLs are left
+  unmodified — even when those tokens spell one of the listed names.
+- Bold inside link text is permitted: `[**Code Probe** (**C64**)](url)`,
+  `[**Super Expander** ROM](#anchor)`.
 - Tools (`Kick Assembler`, `Claude Code`) are linked at first prose
   mention in each meaningful section, not just at first mention in the
-  document. Bold-on-hardware-names and link-tools combine via
-  `[**Tool Name**](url)`.
+  document. Bare tool names (those not also on the bold-list) appear
+  in link text plain: `[Claude Code](url)`. When a name is *both* a
+  bold-list entry *and* a linked tool (currently only **VICE**), the
+  patterns combine: `[**VICE**](url)`.
 
 ### Badges
 
